@@ -5,6 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.ctre.phoenix6.hardware.TalonFX;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,9 +26,15 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private final TalonFX m_leftDrive = new TalonFX(0);
+  private final TalonFX m_rightDrive = new TalonFX(1);
+  private DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
+  private Joystick m_joystick;
+  
   @Override
-  public void robotInit() {}
-
+  public void robotInit() {
+    m_rightDrive.setInverted(true);
+  }
   @Override
   public void robotPeriodic() {}
 
@@ -33,7 +48,11 @@ public class Robot extends TimedRobot {
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    Joystick m_leftStick = new Joystick(0);
+    Joystick m_rightStick = new Joystick(1);
+    m_robotDrive.tankDrive(-m_leftStick.getY(), -m_rightStick.getY());
+  }
 
   @Override
   public void disabledInit() {}
