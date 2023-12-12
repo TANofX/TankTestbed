@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
     private final TalonFX m_leftMotor2 = new TalonFX(3);
     private final TalonFX m_rightMotor2 = new TalonFX(4);
 
-    private MotorControllerGroup leftMotors = new MotorControllerGroup(m_leftMotor1, m_leftMotor2)
+    private MotorControllerGroup leftMotors = new MotorControllerGroup(m_leftMotor1, m_leftMotor2);
         private MotorControllerGroup rightMotors = new MotorControllerGroup(m_rightMotor1, m_rightMotor2);
 
 
