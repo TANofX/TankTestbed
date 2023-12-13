@@ -30,14 +30,14 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private final CANSparkMax m_leftDrive1= new CANSparkMax(0, MotorType.kBrushless);
-  private final CANSparkMax m_rightDrive1 = new CANSparkMax(1, MotorType.kBrushless);
-  private final CANSparkMax m_leftDrive2 = new CANSparkMax(2, MotorType.kBrushless);
-  private final CANSparkMax m_rightDrive2 = new CANSparkMax(3, MotorType.kBrushless);
+  private final CANSparkMax m_leftDrive1= new CANSparkMax(11, MotorType.kBrushless);
+  private final CANSparkMax m_rightDrive1 = new CANSparkMax(12, MotorType.kBrushless);
+  private final CANSparkMax m_leftDrive2 = new CANSparkMax(13, MotorType.kBrushless);
+  private final CANSparkMax m_rightDrive2 = new CANSparkMax(14, MotorType.kBrushless);
 
   private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(m_leftDrive1, m_leftDrive2);
   private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(m_rightDrive1, m_rightDrive2);
-  
+
   private DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
   private Joystick m_joystick;
   private final PneumaticsControlModule m_module = new PneumaticsControlModule();
