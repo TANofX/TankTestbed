@@ -22,9 +22,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Robot extends TimedRobot {
   
   private final CANSparkMax m_leftDrive = new CANSparkMax(11, MotorType.kBrushless);
-  //private final CANSparkMax m_leftDrive = new CANSparkMax(12, MotorType.kBrushless);
+  private final CANSparkMax m_leftDriveFollower = new CANSparkMax(12, MotorType.kBrushless);
   private final CANSparkMax m_rightDrive = new CANSparkMax(14, MotorType.kBrushless);
-  //private final CANSparkMax m_rightDrive = new CANSparkMax(13, MotorType.kBrushless);
+  private final CANSparkMax m_rightDriveFollower = new CANSparkMax(13, MotorType.kBrushless);
 
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
   private final Joystick m_stick = new Joystick(0);
@@ -36,7 +36,10 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+    m_leftDriveFollower.follow(m_leftDrive);
+    m_rightDriveFollower.follow(m_rightDrive);
+  }
 
   @Override
   public void robotPeriodic() {}
