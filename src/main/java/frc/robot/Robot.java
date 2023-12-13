@@ -7,11 +7,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 
@@ -22,10 +27,10 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
  * project.
  */
 public class Robot extends TimedRobot {
-    private final TalonFX m_leftMotor1 = new TalonFX(0);
-    private final TalonFX m_rightMotor1 = new TalonFX(1);
-    private final TalonFX m_leftMotor2 = new TalonFX(3);
-    private final TalonFX m_rightMotor2 = new TalonFX(4);
+    private final CANSparkMax m_leftMotor1 = new CANSparkMax(0, MotorType.kBrushless);
+    private final CANSparkMax m_rightMotor1 = new CANSparkMax(1, MotorType.kBrushless);
+    private final CANSparkMax m_leftMotor2 = new CANSparkMax(3, MotorType.kBrushless);
+    private final CANSparkMax m_rightMotor2 = new CANSparkMax(4, MotorType.kBrushless);
 
     private MotorControllerGroup leftMotors = new MotorControllerGroup(m_leftMotor1, m_leftMotor2);
         private MotorControllerGroup rightMotors = new MotorControllerGroup(m_rightMotor1, m_rightMotor2);
@@ -35,8 +40,12 @@ public class Robot extends TimedRobot {
 
     private final XboxController controller = new XboxController(0);
 
-    private Joystick verticalStick = new Joystick(0);
-    private Joystick horizontalStick = new Joystick(1);
+    //private Joystick verticalStick = new Joystick(0);
+    //private Joystick horizontalStick = new Joystick(1);
+
+    private final PneumaticsControlModule module = new PneumaticsControlModule();
+
+    private DoubleSolenoid solenoid = module.makeDoubleSolenoid(0, 1);
 
     
    
@@ -52,6 +61,7 @@ public class Robot extends TimedRobot {
    
      
   }
+  
 
   @Override
   public void robotPeriodic() {}
@@ -69,19 +79,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //read button and joystick/solenoid
     
-      drives.arcadeDrive(verticalStick.getY(), 0);
-   
-    
-      drives.arcadeDrive(verticalStick.getY(), 0);
+      drives.arcadeDrive(controller.getLeftY(), controller.getLeftX());
 
-  
-    drives.arcadeDrive(0, horizontalStick.getX() );
+      if (controller.getAButtonPressed() == true) {
+        solenoid.close();
+      }
 
-
-  drives.arcadeDrive(0, horizontalStick.getX());
-
-  
- 
+      
   }
 
   @Override
