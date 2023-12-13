@@ -5,11 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import com.ctre.phoenix6.hardware.TalonFX;
+import java.lang.ModuleLayer.Controller;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Timer;
@@ -26,10 +30,12 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private final TalonFX m_leftDrive = new TalonFX(0);
-  private final TalonFX m_rightDrive = new TalonFX(1);
+  private final CANSparkMax m_leftDrive = new CANSparkMax(0, MotorType.kBrushless);
+  private final CANSparkMax m_rightDrive = new CANSparkMax(1, MotorType.kBrushless);
   private DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
   private Joystick m_joystick;
+  private final PneumaticsControlModule m_module = new PneumaticsControlModule();
+  private final DoubleSolenoid m_doubleSolenoid = m_module.makeDoubleSolenoid(0, 1);
   
   @Override
   public void robotInit() {
@@ -52,6 +58,10 @@ public class Robot extends TimedRobot {
     Joystick m_leftStick = new Joystick(0);
     Joystick m_rightStick = new Joystick(1);
     m_robotDrive.tankDrive(-m_leftStick.getY(), -m_rightStick.getY());
+
+    if (m_joystick.getTrigger()) {
+      m_doubleSolenoid.close();
+    }
   }
 
   @Override
