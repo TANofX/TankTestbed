@@ -5,6 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -13,6 +20,17 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * project.
  */
 public class Robot extends TimedRobot {
+  
+  private final CANSparkMax m_leftDrive = new CANSparkMax(11, MotorType.kBrushless);
+  //private final CANSparkMax m_leftDrive = new CANSparkMax(12, MotorType.kBrushless);
+  private final CANSparkMax m_rightDrive = new CANSparkMax(14, MotorType.kBrushless);
+  //private final CANSparkMax m_rightDrive = new CANSparkMax(13, MotorType.kBrushless);
+
+  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
+  private final Joystick m_stick = new Joystick(0);
+  private final Timer m_timer = new Timer();
+  public final PneumaticsControlModule theOneAndOnlyPCM = new PneumaticsControlModule(2);
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -24,16 +42,32 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {}
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit()
+  {
+    m_timer.restart();
+  }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() 
+  {
+    //Probaly should not test auto
+    // Drive for 2 seconds
+    if (m_timer.get() < 2.0) {
+      // Drive forwards half speed, make sure to turn input squaring off
+      m_robotDrive.arcadeDrive(0.5, 0.0, false);
+    } else {
+      m_robotDrive.stopMotor(); // stop robot
+    }
+  }
 
   @Override
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic()
+  {
+    m_robotDrive.arcadeDrive(-m_stick.getY(), -m_stick.getX());
+  }
 
   @Override
   public void disabledInit() {}
