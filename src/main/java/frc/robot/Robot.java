@@ -27,10 +27,10 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
  * project.
  */
 public class Robot extends TimedRobot {
-    private final CANSparkMax m_leftMotor1 = new CANSparkMax(0, MotorType.kBrushless);
-    private final CANSparkMax m_rightMotor1 = new CANSparkMax(1, MotorType.kBrushless);
-    private final CANSparkMax m_leftMotor2 = new CANSparkMax(3, MotorType.kBrushless);
-    private final CANSparkMax m_rightMotor2 = new CANSparkMax(4, MotorType.kBrushless);
+    private final CANSparkMax m_leftMotor1 = new CANSparkMax(11, MotorType.kBrushless);
+    private final CANSparkMax m_rightMotor1 = new CANSparkMax(13, MotorType.kBrushless);
+    private final CANSparkMax m_leftMotor2 = new CANSparkMax(12, MotorType.kBrushless);
+    private final CANSparkMax m_rightMotor2 = new CANSparkMax(14, MotorType.kBrushless);
 
     private MotorControllerGroup leftMotors = new MotorControllerGroup(m_leftMotor1, m_leftMotor2);
         private MotorControllerGroup rightMotors = new MotorControllerGroup(m_rightMotor1, m_rightMotor2);
