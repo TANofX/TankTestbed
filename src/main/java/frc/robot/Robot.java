@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Joystick m_Stick = new Joystick(0);
-    m_robotDrive.tankDrive(m_Stick.getY(), m_Stick.getX());
+    m_robotDrive.tankDrive(-m_Stick.getY(), -m_Stick.getX());
 
     if (m_joystick.getTrigger()) {
       m_doubleSolenoid.close();
