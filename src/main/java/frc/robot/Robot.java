@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
     // Pnematic so
     if (m_stick.getTriggerPressed())
     {
-      basicSolenoid.toggle();;
+      basicSolenoid.toggle();
     }
   }
 
