@@ -5,20 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import java.lang.ModuleLayer.Controller;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -42,7 +35,7 @@ public class Robot extends TimedRobot {
   private DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
   private Joystick m_joystick;
   private final PneumaticsControlModule m_module = new PneumaticsControlModule();
-  private final DoubleSolenoid m_doubleSolenoid = m_module.makeDoubleSolenoid(0, 1);
+  private final Solenoid m_Solenoid = m_module.makeSolenoid(2);
   
   @Override
   public void robotInit() {
@@ -62,12 +55,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    Joystick m_leftStick = new Joystick(0);
-    Joystick m_rightStick = new Joystick(1);
-    m_robotDrive.tankDrive(-m_leftStick.getY(), -m_rightStick.getY());
+    Joystick m_Stick = new Joystick(0);
+    m_robotDrive.tankDrive(-m_Stick.getY(), -m_Stick.getX());
 
     if (m_joystick.getTrigger()) {
-      m_doubleSolenoid.set(Value.kForward);;
+      m_Solenoid.set(true);;
     }
   }
 
