@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    m_rightDrive.setInverted(true);
     m_leftDriveFollower.follow(m_leftDrive);
     m_rightDriveFollower.follow(m_rightDrive);
   }
