@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 /**
@@ -66,7 +67,7 @@ public class Robot extends TimedRobot {
     m_robotDrive.tankDrive(-m_leftStick.getY(), -m_rightStick.getY());
 
     if (m_joystick.getTrigger()) {
-      m_doubleSolenoid.close();
+      m_doubleSolenoid.set(Value.kForward);;
     }
   }
 
