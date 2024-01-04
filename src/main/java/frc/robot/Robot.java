@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     m_robotDrive.tankDrive(-m_Stick.getY(), -m_Stick.getX());
 
     if (m_joystick.getTrigger()) {
-      m_Solenoid.set(true);;
+      m_Solenoid.toggle();
     }
   }
 
