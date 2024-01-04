@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
     // Drives
     m_robotDrive.arcadeDrive(-m_stick.getY(), -m_stick.getX());
 
-    // Pnematic so
+    // Pnematic solinoid
     if (m_stick.getTriggerPressed())
     {
       basicSolenoid.toggle();
