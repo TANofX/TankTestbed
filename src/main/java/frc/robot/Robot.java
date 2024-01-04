@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import com.revrobotics.CANSparkMax;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   private final Joystick m_stick = new Joystick(0);
   private final Timer m_timer = new Timer();
   public final PneumaticsControlModule theOneAndOnlyPCM = new PneumaticsControlModule(2);
+  public Solenoid basicSolenoid = theOneAndOnlyPCM.makeSolenoid(2);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -69,7 +71,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic()
   {
+    // Drives
     m_robotDrive.arcadeDrive(-m_stick.getY(), -m_stick.getX());
+
+    // Pnematic so
+    if (m_stick.getTriggerPressed())
+    {
+      basicSolenoid.toggle();
+    }
   }
 
   @Override
