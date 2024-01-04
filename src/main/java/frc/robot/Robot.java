@@ -25,21 +25,22 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   private final CANSparkMax m_leftDrive1= new CANSparkMax(11, MotorType.kBrushless);
-  private final CANSparkMax m_rightDrive1 = new CANSparkMax(12, MotorType.kBrushless);
-  private final CANSparkMax m_leftDrive2 = new CANSparkMax(13, MotorType.kBrushless);
+  private final CANSparkMax m_rightDrive1 = new CANSparkMax(13, MotorType.kBrushless);
+  private final CANSparkMax m_leftDrive2 = new CANSparkMax(12, MotorType.kBrushless);
   private final CANSparkMax m_rightDrive2 = new CANSparkMax(14, MotorType.kBrushless);
 
   private final MotorControllerGroup m_leftDrive = new MotorControllerGroup(m_leftDrive1, m_leftDrive2);
   private final MotorControllerGroup m_rightDrive = new MotorControllerGroup(m_rightDrive1, m_rightDrive2);
 
   private DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
-  private Joystick m_joystick;
+  private Joystick m_Stick = new Joystick(0);
   private final PneumaticsControlModule m_module = new PneumaticsControlModule(2);
   private final Solenoid m_Solenoid = m_module.makeSolenoid(2);
   
   @Override
   public void robotInit() {
-    m_rightDrive.setInverted(true);
+   m_rightDrive.setInverted(true);
+  
   }
   @Override
   public void robotPeriodic() {}
@@ -55,12 +56,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    Joystick m_Stick = new Joystick(0);
-    m_robotDrive.tankDrive(-m_Stick.getY(), -m_Stick.getX());
 
-    if (m_joystick.getTrigger()) {
+    m_robotDrive.arcadeDrive(-m_Stick.getY(), -m_Stick.getX());
+
+    if (m_Stick.getTrigger()) {
       m_Solenoid.toggle();
     }
+
+    System.out.println("X: " + m_Stick.getX() + " Y: " + m_Stick.getY());
   }
 
   @Override
