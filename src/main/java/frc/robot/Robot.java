@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
 
   private DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftDrive, m_rightDrive);
   private Joystick m_joystick;
-  private final PneumaticsControlModule m_module = new PneumaticsControlModule();
+  private final PneumaticsControlModule m_module = new PneumaticsControlModule(2);
   private final Solenoid m_Solenoid = m_module.makeSolenoid(2);
   
   @Override
