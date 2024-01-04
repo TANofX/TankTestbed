@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
+import javax.swing.plaf.basic.BasicBorders.ToggleButtonBorder;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,6 +15,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.Solenoid;
 
 
 /**
@@ -27,6 +31,8 @@ public class Robot extends TimedRobot {
   private final CANSparkMax m_frontleftDrive = new CANSparkMax(11, MotorType.kBrushless);
   private final CANSparkMax m_frontrightDrive = new CANSparkMax(14, MotorType.kBrushless);
   private final Joystick m_stick = new Joystick(0);
+  private final PneumaticsControlModule m_PCM = new PneumaticsControlModule(2);
+  private final Solenoid m__Solenoid = m_PCM.makeSolenoid(2);
   private final MotorControllerGroup rightDrive = new MotorControllerGroup(m_backrightDrive, m_frontrightDrive);
   private final MotorControllerGroup leftDrive = new MotorControllerGroup(m_backleftDrive, m_frontleftDrive);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(leftDrive, rightDrive);
@@ -64,6 +70,8 @@ m_robotDrive.stopMotor(); // stop robot
   @Override
   public void teleopPeriodic() {
   m_robotDrive.arcadeDrive(-m_stick.getY(), -m_stick.getX());
+  //Toggle the solenoid each time the trigger is pressed
+  if (m_stick.getTriggerPressed()) m__Solenoid.toggle();
   }
   @Override
   public void disabledInit() {}
